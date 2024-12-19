@@ -47,6 +47,9 @@
   <ItemGroup>
      <Compile Include="Assets\Script\PlayerJumpState.cs" />
      <Compile Include="Assets\Script\PlayerDashState.cs" />
+     <Compile Include="Assets\Script\PlayerWallJump.cs" />
+     <Compile Include="Assets\Script\PlayerAtk.cs" />
+     <Compile Include="Assets\Script\PlayerAnimationTrigger.cs" />
      <Compile Include="Assets\Script\PlayerGroundedState.cs" />
      <Compile Include="Assets\Script\PlayerIdelState.cs" />
      <Compile Include="Assets\Script\PlayerState.cs" />

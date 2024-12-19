@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
     [Header("冲刺")] 
     public float dashSpeed;
     public float dashTime;
-    private float dashCd = 1f;
+    private float dashCd = .3f;
     private float dashTimer;
     public float dashDir { get;private set; }
 
@@ -47,6 +47,10 @@ public class Player : MonoBehaviour
     
     public PlayerWallSlideState WallSlideState { get; private set; }
     
+    public PlayerWallJump WallJumpState { get; private set; }
+    
+    public PlayerAtk AtkState { get; private set; }
+    
     #endregion
 
     private void Awake()
@@ -59,6 +63,8 @@ public class Player : MonoBehaviour
         AirState  = new PLayerAirState(this, StateMachine, "Jump");
         DashState = new PlayerDashState(this, StateMachine, "Dash");
         WallSlideState = new PlayerWallSlideState(this, StateMachine, "Slide");
+        WallJumpState = new PlayerWallJump(this, StateMachine, "Jump");
+        AtkState = new PlayerAtk(this, StateMachine, "Atk");
     }
 
     private void Start()
@@ -74,8 +80,14 @@ public class Player : MonoBehaviour
         CheckDashInput();
     }
 
+    public void AnimationTrigger() => StateMachine.currentState.FInishTrigger();
+
     private void CheckDashInput()
     {
+        if (IsWallDetected() && !IsGroundDetected())
+        {
+           return; 
+        }
         
         dashTimer -= Time.deltaTime;
         if (Input.GetKeyDown(KeyCode.LeftShift) && dashTimer < 0)

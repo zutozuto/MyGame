@@ -16,6 +16,13 @@ public class PlayerWallSlideState : PlayerState
     public override void Update()
     {
         base.Update();
+
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            stateMachine.ChangeState(player.WallJumpState);
+            return;
+        }
         if (xInput != 0 && player.facingDir != xInput)
         { 
             stateMachine.ChangeState(player.IdleState);
@@ -28,7 +35,7 @@ public class PlayerWallSlideState : PlayerState
         else 
             rb.velocity = new Vector2(0, rb.velocity.y * .7f);
 
-        if (player.IsGroundDetected())
+        if (player.IsGroundDetected() || !player.IsWallDetected())
         {
             stateMachine.ChangeState(player.IdleState);
         }
