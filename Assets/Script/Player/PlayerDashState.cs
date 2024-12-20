@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class PlayerDashState : PlayerState
@@ -11,6 +12,7 @@ public class PlayerDashState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        player.gameObject.layer = LayerMask.NameToLayer("Dash");
         stateTimer = player.dashTime;
     }
 
@@ -34,6 +36,7 @@ public class PlayerDashState : PlayerState
     {
         base.Exit();
         player.SetVelocity(0, rb.velocity.y);
+        player.gameObject.layer = LayerMask.NameToLayer("Player");
 
     }
 }

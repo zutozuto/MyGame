@@ -16,12 +16,22 @@ public class PlayerAtk : PlayerState
     public override void Enter()
     {
         base.Enter();
+
+        xInput = 0;
         
         if (comboCounter > 2 || Time.time >= lastTimeAtk + comboWindow)
         {
             comboCounter = 0;
         }
         player.Anim.SetInteger("comboCounter", comboCounter);
+        
+        float atkDir = player.facingDir;
+
+        if (xInput != 0)
+        {
+            atkDir = xInput;
+        }
+        player.SetVelocity(player.atkMovement[comboCounter].x * atkDir,player.atkMovement[comboCounter].y);
 
         stateTimer = .1f;
     }
@@ -32,7 +42,7 @@ public class PlayerAtk : PlayerState
 
         if (stateTimer < 0)
         {
-            rb.velocity = new Vector2(0, 0);
+            player.ZeroVelocity();
         }
         
         if (triggerCalled)
@@ -45,6 +55,7 @@ public class PlayerAtk : PlayerState
     public override void Exit()
     {
         base.Exit();
+        player.StartCoroutine("BusyFor", .15f);
         comboCounter++;
         lastTimeAtk = Time.time;
     }
