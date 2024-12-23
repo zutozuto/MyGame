@@ -23,4 +23,7 @@ public class SkeletonAimTrigger : MonoBehaviour
             }
         }
     }
+
+    private void OpenWindow() => enemy.OpenAtkWindow();
+    private void CloseWindow() => enemy.CloseAtkWindow();
 }

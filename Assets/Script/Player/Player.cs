@@ -10,6 +10,8 @@ public class Player : Entity
     [Header("攻击")] 
     public Vector2[] atkMovement;
 
+    public float counterAtkDuration = .2f;
+
 
     public bool isBusy { get; private set; }
 
@@ -42,6 +44,8 @@ public class Player : Entity
     
     public PlayerAtk AtkState { get; private set; }
     
+    public PlayerCounterAtk CounterAtkState { get; private set; }
+    
     #endregion
 
     protected override void Awake()
@@ -56,6 +60,7 @@ public class Player : Entity
         WallSlideState = new PlayerWallSlideState(this, StateMachine, "Slide");
         WallJumpState = new PlayerWallJump(this, StateMachine, "Jump");
         AtkState = new PlayerAtk(this, StateMachine, "Atk");
+        CounterAtkState = new PlayerCounterAtk(this, StateMachine, "CounterAtk");
     }
 
     protected override void Start()

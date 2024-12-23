@@ -9,6 +9,8 @@ public class Enemy : Entity
     [Header("击晕")] 
     public float stunDuration;
     public Vector2 stunPosition;
+    protected bool canStun;
+    [SerializeField] protected GameObject Image;
     
     [Header("移动")]
     public float moveSpeed;
@@ -41,7 +43,30 @@ public class Enemy : Entity
         base.Update();
         stateMachine.currentState.Update();
     }
-    
+
+    public virtual void OpenAtkWindow()
+    {
+        canStun = true;
+        Image.SetActive(true);
+    }
+
+    public virtual void CloseAtkWindow()
+    {
+        canStun = false;
+        Image.SetActive(false);
+    }
+
+    public virtual bool CanStun()
+    {
+        if (canStun)
+        {
+            CloseAtkWindow();
+            return true;
+        }
+        
+        return false;
+    }
+
     public virtual void AnimationFinishTrigger() => stateMachine.currentState.AnimationFinishTrigger();
     
     public virtual RaycastHit2D IsPlayerDetected() => Physics2D.Raycast(wallCheck.position, Vector2.right * facingDir,50, whatIsPlayer);

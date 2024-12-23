@@ -43,4 +43,15 @@ public class EnemySkeleton : Enemy
         }
         
     }
+
+    public override bool CanStun()
+    {
+        if (base.CanStun())
+        {
+            stateMachine.ChangeMachine(StunnedState);
+            return true;
+        }
+        
+        return false;
+    }
 }
